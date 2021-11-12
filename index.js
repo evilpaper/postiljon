@@ -10,6 +10,7 @@ app.get("/", function (req, res) {
 app.listen(port, () => {
   console.log(
     "\n" + "\x1b[36m%s\x1b[0m",
-    "The server is running. Listening to port " + port + "\n"
+    "The server is running. Listening to port " + port + "\n",
+    "\n"
   );
 });
