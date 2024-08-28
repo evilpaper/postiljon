@@ -1,19 +1,20 @@
 import { Hono } from "hono";
 import { config } from "dotenv";
+import nodemailer from "nodemailer";
 
 config(); // Load .env variables
 
 const app = new Hono();
 
-// const transporter = nodemailer.createTransport({
-//   host: process.env.EMAIL_SERVICE,
-//   port: parseInt(process.env.EMAIL_PORT!),
-//   secure: false, // Use SSL if true
-//   auth: {
-//     user: process.env.EMAIL_USER,
-//     pass: process.env.EMAIL_PASSWORD,
-//   },
-// });
+const transporter = nodemailer.createTransport({
+  host: process.env.EMAIL_SERVICE,
+  port: parseInt(process.env.EMAIL_PORT!),
+  secure: false, // Use SSL if true
+  auth: {
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASSWORD,
+  },
+});
 
 app.get("/", (c) => {
   return c.text("Welcome to Postiljon!");
