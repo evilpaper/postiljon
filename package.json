@@ -1,0 +1,13 @@
+{
+  "name": "postiljon",
+  "scripts": {
+    "dev": "bun run --hot src/index.ts"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "hono": "^4.5.9"
+  },
+  "devDependencies": {
+    "@types/bun": "latest"
+  }
+}
