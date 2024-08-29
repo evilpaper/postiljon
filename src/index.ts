@@ -39,7 +39,10 @@ app.post("/send-email", async (c) => {
     await transporter.sendMail(mailOptions);
     return c.json({ success: true, message: "Email sent successfully." });
   } catch (error) {
-    return c.json({ success: false, message: "Failed to send email." }, 500);
+    return c.json(
+      { success: false, message: "Failed to send email.", error: error },
+      500
+    );
   }
 });
 
