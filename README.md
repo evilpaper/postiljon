@@ -21,5 +21,5 @@ To test endpoints:
 ```sh
 curl -X POST http://localhost:3000/send-email \
 -H "Content-Type: application/json" \
--d '{"name":"John Doe","email":"john@example.com","message":"Hello there!"}'
+-d '{"name":"Pelle Lundgren","email":"pelle@evilpaper.com","message":"Love your product! Lets meet."}'
 ```

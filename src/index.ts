@@ -1,20 +1,12 @@
 import { Hono } from "hono";
 import { config } from "dotenv";
-import nodemailer from "nodemailer";
+import { Resend } from "resend";
 
 config(); // Load .env variables
 
-const app = new Hono();
+const resend = new Resend(process.env.RESEND_API_KEY);
 
-const transporter = nodemailer.createTransport({
-  host: process.env.EMAIL_SERVICE_HOST,
-  port: parseInt(process.env.EMAIL_SERVICE_PORT!),
-  secure: false, // Use SSL if true
-  auth: {
-    user: process.env.EMAIl_SERVICE_USER,
-    pass: process.env.EMAIL_SERVICE_PASS,
-  },
-});
+const app = new Hono();
 
 app.get("/", (c) => {
   return c.text("Welcome to Postiljon!");
@@ -28,15 +20,13 @@ app.post("/send-email", async (c) => {
     return c.json({ error: "All fields are required." }, 400);
   }
 
-  const mailOptions = {
-    from: `"${name}" <${email}>`,
-    to: process.env.RECEIVER_EMAIL!,
-    subject: `Message from ${name}`,
-    text: message,
-  };
-
   try {
-    await transporter.sendMail(mailOptions);
+    await resend.emails.send({
+      from: `${name} <onboarding@resend.dev>`, // The domain need to be verified at Resend
+      to: [process.env.RECEIVER_EMAIL!],
+      subject: `Message from ${name}`,
+      text: message,
+    });
     return c.json({ success: true, message: "Email sent successfully." });
   } catch (error) {
     return c.json(
