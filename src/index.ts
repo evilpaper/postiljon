@@ -25,7 +25,7 @@ app.post("/send-email", async (c) => {
       from: `${name} <onboarding@resend.dev>`, // The domain need to be verified at Resend
       to: [process.env.RECEIVER_EMAIL!],
       subject: `Message from ${name}`,
-      text: message,
+      text: `Message: ${message} Contact email: ${email}`,
     });
     return c.json({ success: true, message: "Email sent successfully." });
   } catch (error) {
