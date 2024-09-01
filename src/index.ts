@@ -5,8 +5,9 @@ import { Resend } from "resend";
 config(); // Load .env variables
 
 const resend = new Resend(process.env.RESEND_API_KEY);
-
 const app = new Hono();
+
+const senderEmail = process.env.SENDER_EMAIL || "<onboarding@resend.dev>";
 
 app.get("/", (c) => {
   return c.text("Welcome to Postiljon!");
@@ -22,7 +23,7 @@ app.post("/send-email", async (c) => {
 
   try {
     await resend.emails.send({
-      from: `${name} <onboarding@resend.dev>`, // The domain need to be verified at Resend
+      from: `${name} ${senderEmail}`, // The domain need to be verified at Resend
       to: [process.env.RECEIVER_EMAIL!],
       subject: `Message from ${name}`,
       text: `Message: ${message} Contact email: ${email}`,
